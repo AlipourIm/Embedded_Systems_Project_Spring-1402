@@ -193,7 +193,7 @@ def keypad_auth(input_values):
 			pressed_key = readLine(L4, ["*","0","#"])
 		if pressed_key == "":
 			continue
-		if pressed_key == "#":
+		if pressed_key == "#" and len(sec) >= 8:
 			std_id = "".join(sec)
 			auth_res, cond = check_validity(std_id, 2)
 			input_values["status"] = 1
@@ -201,6 +201,8 @@ def keypad_auth(input_values):
 			input_values["std_num"] = std_id
 			input_values["condition"] = "keypad"
 			return
+		elif pressed_key == "#":
+			continue
 		elif pressed_key == "*":
 			sec = sec[0:-1]
 			main_lcd.lcd_display_string("".join(sec)+" "*(16-len(sec)), 2)
