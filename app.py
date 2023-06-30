@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request 
-from flask import url_for, redirect
+from flask import url_for, redirect, send_file
 from flask_cors import CORS
 import json
 from types import SimpleNamespace
@@ -28,6 +28,13 @@ def save_error_log(error):
 @app.route('/')
 def home():
     return redirect(url_for('static', filename='index.html'))
+
+@app.route('/getImage')
+def get_image():
+    filename = request.args.get('filename')
+    filename = filename.replace("\"", "")
+    filename = filename.replace("./", "")
+    return send_file(filename, mimetype='image/jpeg')
 
 @app.route('/getAllLogs', methods=['POST'])
 def get_all_logs():
